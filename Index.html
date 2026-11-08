@@ -6,6 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Una carta para ti ❤️</title>
 
+<!-- Tipografía manuscrita -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
 * {
     margin: 0;
@@ -16,13 +21,13 @@
 body {
     min-height: 100vh;
     background:
-        radial-gradient(ellipse at 50% 45%, #42121e 0%, #19090f 48%, #080608 100%);
-    color: #fff;
-    font-family: Georgia, serif;
+        radial-gradient(ellipse at 50% 45%, #42121e, #19090f 55%, #080608);
+    color: white;
+    font-family: 'Cormorant Garamond', serif;
     overflow-x: hidden;
 }
 
-/* Luces de fondo */
+/* Luz ambiental */
 body::before {
     content: "";
     position: fixed;
@@ -43,10 +48,10 @@ body::before {
 .petalo {
     position: fixed;
     top: -30px;
-    color: #b52b43;
+    color: #c33a52;
     opacity: .65;
-    font-size: 18px;
     pointer-events: none;
+    z-index: 1;
     animation: caer linear infinite;
 }
 
@@ -59,7 +64,7 @@ body::before {
     }
 }
 
-/* Pantalla inicial */
+/* Contenedor */
 .contenedor {
     min-height: 100vh;
     display: flex;
@@ -89,7 +94,7 @@ h1 {
 
 .descripcion {
     color: #d4bfc0;
-    font-size: 15px;
+    font-size: 17px;
     line-height: 1.7;
     margin-bottom: 35px;
 }
@@ -166,7 +171,7 @@ h1 {
     opacity: 0;
 }
 
-/* Botón */
+/* Botones */
 .boton {
     padding: 14px 30px;
     border: 1px solid #c69b5c;
@@ -192,19 +197,40 @@ h1 {
     cursor: default;
 }
 
-/* Carta */
+/* Hoja de la carta */
 .carta {
     display: none;
-    width: min(100%, 510px);
+    width: min(100%, 530px);
     margin: 25px auto;
-    padding: 35px 25px;
-    background: linear-gradient(145deg, #fff7e9, #eee0c9);
-    color: #4b2630;
+    padding: 38px 27px;
+    background:
+        linear-gradient(145deg, #fff9ed, #eee0c9);
+    color: #542b35;
     border: 2px solid #c9a46c;
     box-shadow: 0 15px 50px #0009;
     border-radius: 3px;
     text-align: left;
+    position: relative;
     animation: aparecer 1.2s ease forwards;
+}
+
+/* Detalles de la hoja */
+.carta::before {
+    content: "❦";
+    display: block;
+    text-align: center;
+    font-size: 27px;
+    color: #a77a50;
+    margin-bottom: 15px;
+}
+
+.carta::after {
+    content: "❦";
+    display: block;
+    text-align: center;
+    font-size: 27px;
+    color: #a77a50;
+    margin-top: 25px;
 }
 
 @keyframes aparecer {
@@ -218,35 +244,45 @@ h1 {
     }
 }
 
+/* Título */
 .carta h2 {
     text-align: center;
-    font-size: 23px;
-    font-weight: normal;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(27px, 7vw, 35px);
+    font-weight: 600;
     color: #852c3e;
-    margin-bottom: 28px;
-    line-height: 1.5;
+    margin-bottom: 30px;
+    line-height: 1.4;
 }
 
+/* Escritura manuscrita */
 .carta p {
-    font-size: 16px;
-    line-height: 1.9;
-    margin-bottom: 18px;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(21px, 5.5vw, 25px);
+    font-weight: 500;
+    line-height: 1.75;
+    margin-bottom: 23px;
+    color: #542b35;
     white-space: pre-wrap;
 }
 
+/* Firma */
 .firma {
     text-align: right;
     color: #8a3043;
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
     font-style: italic;
-    margin-top: 28px;
+    margin-top: 30px;
 }
 
+/* Frase final */
 .frase-final {
     display: none;
     text-align: center;
     color: #a83a50;
-    font-size: 19px;
-    font-style: italic;
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(25px, 6vw, 31px);
     line-height: 1.7;
     margin-top: 35px;
     animation: aparecer 2s ease;
@@ -254,7 +290,7 @@ h1 {
 
 .corazon-final {
     display: block;
-    font-size: 30px;
+    font-size: 32px;
     margin-top: 15px;
     animation: latido 1.3s infinite;
 }
@@ -264,21 +300,32 @@ h1 {
     50% { transform: scale(1.2); }
 }
 
+/* Música */
+.control-musica {
+    position: fixed;
+    bottom: 18px;
+    right: 15px;
+    z-index: 10;
+    padding: 11px 16px;
+    border: 1px solid #c69b5c;
+    border-radius: 30px;
+    background: #681b2c;
+    color: #f5e6ce;
+    font-size: 13px;
+    cursor: pointer;
+    display: none;
+}
+
 .pie {
     margin-top: 35px;
     color: #b99a83;
     font-size: 12px;
     letter-spacing: 2px;
-    text-align: center;
 }
 
 @media(max-width: 400px) {
     .carta {
-        padding: 28px 19px;
-    }
-
-    .carta p {
-        font-size: 15px;
+        padding: 30px 20px;
     }
 }
 </style>
@@ -287,6 +334,16 @@ h1 {
 <body>
 
 <div id="petalos"></div>
+
+<!-- Canción de fondo -->
+<audio id="musica" loop preload="auto">
+    <source src="Diego%20Luna%20-%20Te%20Amo%20Y%20M%C3%A1s%20(Letra)(MP3_160K).mp3" type="audio/mpeg">
+</audio>
+
+<!-- Botón de música -->
+<button class="control-musica" id="controlMusica" onclick="controlarMusica()">
+    ♫ Pausar música
+</button>
 
 <main class="contenedor">
 
@@ -328,6 +385,10 @@ h1 {
             <span class="corazon-final">♥</span>
         </div>
 
+        <div class="firma" id="firma" style="display:none;">
+            Con todo mi cariño ♡
+        </div>
+
     </article>
 
 </main>
@@ -337,7 +398,7 @@ h1 {
 /* Crear pétalos */
 const zonaPetalos = document.getElementById("petalos");
 
-for (let i = 0; i < 18; i++) {
+for (let i = 0; i < 20; i++) {
     const petalo = document.createElement("div");
     petalo.className = "petalo";
     petalo.textContent = "✿";
@@ -347,6 +408,12 @@ for (let i = 0; i < 18; i++) {
     petalo.style.fontSize = (12 + Math.random() * 13) + "px";
     zonaPetalos.appendChild(petalo);
 }
+
+/* Elementos */
+const musica = document.getElementById("musica");
+const control = document.getElementById("controlMusica");
+
+let iniciado = false;
 
 /* Texto de la carta */
 const parrafos = [
@@ -369,13 +436,12 @@ const parrafos = [
     "Feliz cumpleaños, mi amor. ❤️"
 ];
 
-let iniciado = false;
-
+/* Esperar */
 function esperar(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-/* Efecto de escritura */
+/* Escribir lentamente */
 async function escribirCarta() {
 
     const contenido = document.getElementById("contenido");
@@ -387,16 +453,20 @@ async function escribirCarta() {
 
         for (let letra of parrafos[i]) {
             parrafo.textContent += letra;
-            await esperar(32);
+            await esperar(38);
         }
 
-        await esperar(i === 0 ? 700 : 1100);
+        await esperar(i === 0 ? 800 : 1200);
     }
 
     document.getElementById("fraseFinal").style.display = "block";
+
+    await esperar(1200);
+
+    document.getElementById("firma").style.display = "block";
 }
 
-/* Abrir carta */
+/* Abrir carta y comenzar música */
 async function abrirCarta() {
 
     if (iniciado) return;
@@ -407,6 +477,16 @@ async function abrirCarta() {
 
     boton.disabled = true;
     boton.textContent = "Abriendo algo especial...";
+
+    /* Iniciar música */
+    musica.volume = 0.35;
+    musica.play().then(() => {
+        control.textContent = "♫ Pausar música";
+    }).catch(() => {
+        control.textContent = "♫ Reproducir música";
+    });
+
+    control.style.display = "block";
 
     sobre.classList.add("abierto");
 
@@ -420,6 +500,25 @@ async function abrirCarta() {
     await esperar(900);
 
     escribirCarta();
+}
+
+/* Pausar y reanudar */
+function controlarMusica() {
+
+    if (musica.paused) {
+
+        musica.play().then(() => {
+            control.textContent = "♫ Pausar música";
+        }).catch(() => {
+            control.textContent = "♫ Reproducir música";
+        });
+
+    } else {
+
+        musica.pause();
+        control.textContent = "♫ Reanudar música";
+
+    }
 }
 
 </script>
