@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una carta para ti ❤️</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at 50% 45%, #42121e 0%, #19090f 48%, #080608 100%);
+    color: #fff;
+    font-family: Georgia, serif;
+    overflow-x: hidden;
+}
+
+/* Luces de fondo */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 15% 20%, #d5a34a18, transparent 25%),
+        radial-gradient(circle at 85% 75%, #a51e3a22, transparent 30%);
+    animation: luz 5s ease-in-out infinite alternate;
+}
+
+@keyframes luz {
+    from { opacity: .5; }
+    to { opacity: 1; }
+}
+
+/* Pétalos */
+.petalo {
+    position: fixed;
+    top: -30px;
+    color: #b52b43;
+    opacity: .65;
+    font-size: 18px;
+    pointer-events: none;
+    animation: caer linear infinite;
+}
+
+@keyframes caer {
+    0% {
+        transform: translateY(-10vh) rotate(0deg);
+    }
+    100% {
+        transform: translateY(110vh) rotate(500deg);
+    }
+}
+
+/* Pantalla inicial */
+.contenedor {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 25px 15px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.subtitulo {
+    color: #d8b878;
+    font-size: 12px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+}
+
+h1 {
+    font-size: clamp(28px, 7vw, 42px);
+    font-weight: normal;
+    color: #f5e6ce;
+    margin-bottom: 12px;
+}
+
+.descripcion {
+    color: #d4bfc0;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 35px;
+}
+
+/* Sobre */
+.sobre {
+    width: 250px;
+    height: 165px;
+    position: relative;
+    margin: 10px auto 35px;
+    cursor: pointer;
+    perspective: 800px;
+    filter: drop-shadow(0 15px 25px #0009);
+}
+
+.base {
+    position: absolute;
+    inset: 0;
+    background: #781e31;
+    border: 1px solid #b87854;
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.triangulo {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 125px solid #a13a4b;
+    border-right: 125px solid #8b263a;
+    border-top: 85px solid transparent;
+    z-index: 4;
+}
+
+.tapa {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 125px solid transparent;
+    border-right: 125px solid transparent;
+    border-top: 95px solid #b44a58;
+    transform-origin: top;
+    transition: transform 1s ease;
+    z-index: 5;
+}
+
+.sello {
+    position: absolute;
+    width: 43px;
+    height: 43px;
+    background: linear-gradient(135deg, #e4bd74, #9d682d);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    top: 67px;
+    left: 104px;
+    z-index: 6;
+    box-shadow: 0 0 15px #d8a54a55;
+    transition: opacity .4s;
+}
+
+.sobre.abierto .tapa {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.sobre.abierto .sello {
+    opacity: 0;
+}
+
+/* Botón */
+.boton {
+    padding: 14px 30px;
+    border: 1px solid #c69b5c;
+    border-radius: 30px;
+    background: linear-gradient(120deg, #681b2c, #39101c);
+    color: #f7e8d0;
+    font-family: Georgia, serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: .3s;
+    box-shadow: 0 0 20px #b77b3b20;
+}
+
+.boton:hover {
+    background: #8c2b40;
+    box-shadow: 0 0 25px #d8a34b44;
+    transform: translateY(-2px);
+}
+
+.boton:disabled {
+    opacity: .6;
+    cursor: default;
+}
+
+/* Carta */
+.carta {
+    display: none;
+    width: min(100%, 510px);
+    margin: 25px auto;
+    padding: 35px 25px;
+    background: linear-gradient(145deg, #fff7e9, #eee0c9);
+    color: #4b2630;
+    border: 2px solid #c9a46c;
+    box-shadow: 0 15px 50px #0009;
+    border-radius: 3px;
+    text-align: left;
+    animation: aparecer 1.2s ease forwards;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.carta h2 {
+    text-align: center;
+    font-size: 23px;
+    font-weight: normal;
+    color: #852c3e;
+    margin-bottom: 28px;
+    line-height: 1.5;
+}
+
+.carta p {
+    font-size: 16px;
+    line-height: 1.9;
+    margin-bottom: 18px;
+    white-space: pre-wrap;
+}
+
+.firma {
+    text-align: right;
+    color: #8a3043;
+    font-style: italic;
+    margin-top: 28px;
+}
+
+.frase-final {
+    display: none;
+    text-align: center;
+    color: #a83a50;
+    font-size: 19px;
+    font-style: italic;
+    line-height: 1.7;
+    margin-top: 35px;
+    animation: aparecer 2s ease;
+}
+
+.corazon-final {
+    display: block;
+    font-size: 30px;
+    margin-top: 15px;
+    animation: latido 1.3s infinite;
+}
+
+@keyframes latido {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.pie {
+    margin-top: 35px;
+    color: #b99a83;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+@media(max-width: 400px) {
+    .carta {
+        padding: 28px 19px;
+    }
+
+    .carta p {
+        font-size: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="petalos"></div>
+
+<main class="contenedor">
+
+    <div id="inicio">
+
+        <div class="subtitulo">Una pequeña sorpresa</div>
+
+        <h1>Para alguien muy especial</h1>
+
+        <p class="descripcion">
+            Hay cosas que merecen ser dichas<br>
+            de una manera diferente...
+        </p>
+
+        <div class="sobre" id="sobre" onclick="abrirCarta()">
+            <div class="base"></div>
+            <div class="triangulo"></div>
+            <div class="tapa"></div>
+            <div class="sello">♥</div>
+        </div>
+
+        <button class="boton" id="boton" onclick="abrirCarta()">
+            Abrir mi carta ♡
+        </button>
+
+        <div class="pie">ESCRITA CON MUCHO CARIÑO</div>
+
+    </div>
+
+    <article class="carta" id="carta">
+
+        <h2>Para la persona que hace mis días más bonitos ❤️</h2>
+
+        <div id="contenido"></div>
+
+        <div class="frase-final" id="fraseFinal">
+            Si volviera a elegir,<br>
+            me encantaría volver a encontrarte.
+            <span class="corazon-final">♥</span>
+        </div>
+
+    </article>
+
+</main>
+
+<script>
+
+/* Crear pétalos */
+const zonaPetalos = document.getElementById("petalos");
+
+for (let i = 0; i < 18; i++) {
+    const petalo = document.createElement("div");
+    petalo.className = "petalo";
+    petalo.textContent = "✿";
+    petalo.style.left = Math.random() * 100 + "vw";
+    petalo.style.animationDuration = (8 + Math.random() * 12) + "s";
+    petalo.style.animationDelay = (Math.random() * 12) + "s";
+    petalo.style.fontSize = (12 + Math.random() * 13) + "px";
+    zonaPetalos.appendChild(petalo);
+}
+
+/* Texto de la carta */
+const parrafos = [
+    "Mi amor:",
+
+    "No sé si existan las palabras perfectas para expresar todo lo que siento por ti, pero hoy quiero intentarlo.",
+
+    "Quiero que sepas que eres una de esas personas que llegan a nuestra vida y, sin darse cuenta, comienzan a hacerla diferente. De repente, una sonrisa tuya puede mejorar mi día, un mensaje tuyo puede cambiar mi ánimo y hasta los pequeños momentos contigo se convierten en recuerdos que quiero guardar.",
+
+    "Me gusta saber que existes, que puedo conocerte un poquito más cada día y que tengo la oportunidad de demostrarte lo especial que eres para mí.",
+
+    "No quiero quererte solamente en los días bonitos, también quiero estar en esos días en los que las cosas no salgan como esperabas, cuando necesites un abrazo, alguien que te escuche o simplemente una compañía que no te haga sentir sola.",
+
+    "Hoy deseo que la vida te regale muchísimas razones para sonreír, que nunca te falten sueños por cumplir, personas que te quieran de verdad y momentos que te hagan sentir lo maravillosa que eres.",
+
+    "Y si pudiera pedir un deseo, sería que nunca olvides lo mucho que vales y lo feliz que me hace tenerte en mi vida.",
+
+    "Gracias por existir, por ser tú y por convertirte en alguien tan especial para mí.",
+
+    "Feliz cumpleaños, mi amor. ❤️"
+];
+
+let iniciado = false;
+
+function esperar(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/* Efecto de escritura */
+async function escribirCarta() {
+
+    const contenido = document.getElementById("contenido");
+
+    for (let i = 0; i < parrafos.length; i++) {
+
+        const parrafo = document.createElement("p");
+        contenido.appendChild(parrafo);
+
+        for (let letra of parrafos[i]) {
+            parrafo.textContent += letra;
+            await esperar(32);
+        }
+
+        await esperar(i === 0 ? 700 : 1100);
+    }
+
+    document.getElementById("fraseFinal").style.display = "block";
+}
+
+/* Abrir carta */
+async function abrirCarta() {
+
+    if (iniciado) return;
+    iniciado = true;
+
+    const boton = document.getElementById("boton");
+    const sobre = document.getElementById("sobre");
+
+    boton.disabled = true;
+    boton.textContent = "Abriendo algo especial...";
+
+    sobre.classList.add("abierto");
+
+    await esperar(1100);
+
+    document.getElementById("inicio").style.display = "none";
+
+    const carta = document.getElementById("carta");
+    carta.style.display = "block";
+
+    await esperar(900);
+
+    escribirCarta();
+}
+
+</script>
+
+</body>
+</html>
